@@ -8,23 +8,11 @@ export const users = pgTable('users', {
 	passwordHash: text('password_hash').notNull(),
 	role: text('role').notNull(),
 	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).notNull(),
+	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' }).notNull(),
 	lastLogin: timestamp('last_login', { withTimezone: true, mode: 'date' }).notNull()
 });
 
 // Setup table for OIDC connection information, add field to users
-export const oauth2 = pgTable('oauth2', {
-	id: text('id').primaryKey(),
-	authorization: text('authorization'),
-	token: text('token'),
-	userInfo: text('user_info'),
-	tokenRevoke: text('token_revoke'),
-	tokenIntrospection: text('token_introspection'),
-	deviceAuthorization: text('device_authorization'),
-	endSession: text('end_session'),
-	jwks: text('jwks'),
-	openIDConfiguration: text('open_id_configuration'),
-	redirectURI: text('redirect_uri')
-});
 
 export const sessions = pgTable('sessions', {
 	id: text('id').primaryKey(),
