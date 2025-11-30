@@ -9,6 +9,8 @@ if (!env.DB_DATABASE) throw new Error('DB_DATABASE is not set');
 if (!env.DB_PORT) throw new Error('DB_PORT is not set');
 if (!env.DB_HOST) throw new Error('DB_HOST is not set');
 
-const client = postgres(`postgres://${env.DB_USER}:${env.DB_PASSWORD}@${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}`);
+const client = postgres(
+	`postgres://${env.DB_USER}:${env.DB_PASSWORD}@${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}`
+);
 
 export const db = drizzle(client, { schema });

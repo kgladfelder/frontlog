@@ -58,7 +58,10 @@ export async function validateSessionToken(token: string) {
 			.where(eq(table.sessions.id, session.id));
 	}
 
-	await db.update(table.users).set({ lastLogin: new Date(Date.now()) }).where(eq(table.users.id, user.id));
+	await db
+		.update(table.users)
+		.set({ lastLogin: new Date(Date.now()) })
+		.where(eq(table.users.id, user.id));
 
 	return { session, user };
 }

@@ -10,4 +10,3 @@ services:
       POSTGRES_DB: ${DB_DATABASE}
     volumes:
       - ./data:/var/lib/postgresql
-

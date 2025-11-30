@@ -21,29 +21,25 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
 
-
-◇  What's next? ───────────────────────────────────────────────────────────╮
-│                                                                          │
-│  📁 Project steps                                                        │
-│                                                                          │
-│    1: cd frontlog                                                        │
-│    2: npm run dev -- --open                                              │
-│                                                                          │
-│  To close the dev server, hit Ctrl-C                                     │
-│                                                                          │
-│  🧩 Add-on steps                                                         │
-│                                                                          │
-│    drizzle:                                                              │
-│      - You will need to set DATABASE_URL in your production environment  │
-│      - Run npm run db:start to start the docker container                │
-│      - Run npm run db:push to update your database schema                │
-│    paraglide:                                                            │
-│      - Edit your messages in messages/en.json                            │
-│      - Visit /demo/paraglide route to view the demo                      │
-│    lucia:                                                                │
-│      - Run npm run db:push to update your database schema                │
-│      - Visit /demo/lucia route to view the demo                          │
-│                                                                          │
-│  Stuck? Visit us at https://svelte.dev/chat                              │
-│                                                                          │
+◇ What's next? ───────────────────────────────────────────────────────────╮
+│ │
+│ 📁 Project steps │
+│ │
+│ 1: cd frontlog │
+│ 2: npm run dev -- --open │
+│ │
+│ To close the dev server, hit Ctrl-C │
+│ │
+│ 🧩 Add-on steps │
+│ │
+│ drizzle: │
+│ - You will need to set DATABASE_URL in your production environment │
+│ - Run npm run db:start to start the docker container │
+│ - Run npm run db:push to update your database schema │
+│ lucia: │
+│ - Run npm run db:push to update your database schema │
+│ - Visit /demo/lucia route to view the demo │
+│ │
+│ Stuck? Visit us at https://svelte.dev/chat │
+│ │
 ├──────────────────────────────────────────────────────────────────────────╯

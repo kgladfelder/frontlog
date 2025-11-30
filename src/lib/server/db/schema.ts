@@ -25,7 +25,9 @@ export const sessions = pgTable('sessions', {
 export const settings = pgTable('settings', {
 	id: text('id').primaryKey(),
 	name: text('name').notNull(),
-	lastModifiedBy: text('last_modified_by').notNull().references(() => users.id),
+	lastModifiedBy: text('last_modified_by')
+		.notNull()
+		.references(() => users.id),
 	lastModified: timestamp('last_modified', { withTimezone: true, mode: 'date' }).notNull()
 });
 
@@ -50,7 +52,9 @@ export const userCategories = pgTable('user_categories', {
 
 export const entries = pgTable('entries', {
 	id: text('id').primaryKey(),
-	userCategoryId: text('user_category_id').notNull().references(() => userCategories.id),
+	userCategoryId: text('user_category_id')
+		.notNull()
+		.references(() => userCategories.id),
 	name: text('name'),
 	length: integer('length'),
 	completed: boolean('completed'),
@@ -63,14 +67,18 @@ export const entries = pgTable('entries', {
 
 export const progress = pgTable('progress', {
 	id: text('id').primaryKey(),
-	entryId: text('entry_id').notNull().references(() => entries.id),
+	entryId: text('entry_id')
+		.notNull()
+		.references(() => entries.id),
 	progress: integer('progress').notNull(),
 	date: date('date')
 });
 
 export const tiers = pgTable('tiers', {
 	id: text('id').primaryKey(),
-	userCategoryId: text('user_category_id').notNull().references(() => userCategories.id),
+	userCategoryId: text('user_category_id')
+		.notNull()
+		.references(() => userCategories.id),
 	name: text('name').notNull(),
 	maximum: integer('maximum'),
 	minimum: integer('minimum')
@@ -89,7 +97,7 @@ export const usersRelations = relations(users, ({ many, one }) => ({
 	session: one(sessions)
 }));
 
-export const settingsRelations = relations(settings, ({one}) => ({
+export const settingsRelations = relations(settings, ({ one }) => ({
 	users: one(users)
 }));
 
