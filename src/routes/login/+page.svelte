@@ -15,7 +15,7 @@
 		selected_id = tab;
 	};
 </script>
-<!-- TODO: Move this into a smaller box centered on the screen -->
+<!-- TODO: Move this into a smaller box centered on the screen and add some type of blurred image behind -->
 <div class="full isolate bg-gray-900 px-6 py-24 sm:py-32 lg:px-8">
 	{#if !data.newSetup && data.registrationEnabled}
 		<div class="mx-auto max-w-2xl text-center">
