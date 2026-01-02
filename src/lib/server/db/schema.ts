@@ -5,7 +5,7 @@ export const users = pgTable('users', {
 	id: text('id').primaryKey(),
 	username: text('username').notNull().unique(),
 	email: text('email').notNull().unique(),
-	passwordHash: text('password_hash').notNull(),
+	passwordHash: text('pash').notNull(),
 	role: text('role').notNull(),
 	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).notNull(),
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' }).notNull(),
@@ -23,8 +23,7 @@ export const sessions = pgTable('sessions', {
 });
 
 export const settings = pgTable('settings', {
-	id: text('id').primaryKey(),
-	name: text('name').notNull(),
+	registrationEnabled: boolean('registrationEnabled').notNull(),
 	lastModifiedBy: text('last_modified_by')
 		.notNull()
 		.references(() => users.id),

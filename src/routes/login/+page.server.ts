@@ -9,9 +9,23 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
 	if (event.locals.user) {
-		return redirect(302, '/demo/lucia');
+		return redirect(302, '/');
 	}
-	return {};
+	let registrationEnabled = false;
+	let newSetup = false;
+	const userResults = await db.select().from(table.users);
+	const settingsResults = await db.select().from(table.settings);
+
+	if (userResults.length === 0) {
+		newSetup = true;
+		registrationEnabled = true;
+	} else if (settingsResults.length === 1) {
+		registrationEnabled = settingsResults[0].registrationEnabled;
+	}
+	return {
+		registrationEnabled,
+		newSetup
+	};
 };
 
 export const actions: Actions = {
@@ -19,23 +33,21 @@ export const actions: Actions = {
 		const formData = await event.request.formData();
 		const username = formData.get('username');
 		const password = formData.get('password');
-
+		
 		if (!validateUsername(username)) {
 			return fail(400, {
-				message: 'Invalid username (min 3, max 31 characters, alphanumeric only)'
+				message: 'Invalid username (min 3, max 31 characters, alphanumeric and lowercase only)'
 			});
 		}
 		if (!validatePassword(password)) {
 			return fail(400, { message: 'Invalid password (min 6, max 255 characters)' });
 		}
-
 		const results = await db.select().from(table.users).where(eq(table.users.username, username));
 
 		const existingUser = results.at(0);
 		if (!existingUser) {
 			return fail(400, { message: 'Incorrect username or password' });
 		}
-
 		const validPassword = await verify(existingUser.passwordHash, password, {
 			memoryCost: 19456,
 			timeCost: 2,
@@ -45,24 +57,45 @@ export const actions: Actions = {
 		if (!validPassword) {
 			return fail(400, { message: 'Incorrect username or password' });
 		}
+		await db.update(table.users).set({ lastLogin: new Date(Date.now()) }).where(eq(table.users.username, username));
 
 		const sessionToken = auth.generateSessionToken();
 		const session = await auth.createSession(sessionToken, existingUser.id);
 		auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
-
-		return redirect(302, '/demo/lucia');
+		return redirect(302, '/');
 	},
 	register: async (event) => {
+		let registrationEnabled = false;
+		let initialSetup = false;
+		const userResults = await db.select().from(table.users);
+		const settingsResults = await db.select().from(table.settings);
+		if (userResults.length === 0) {
+			initialSetup = true;
+			registrationEnabled = true;
+		} else if (settingsResults.length === 1 && settingsResults[0].registrationEnabled === true) {
+			registrationEnabled = true;
+		}
+		if (!registrationEnabled) {
+			return redirect(302, '/');
+		}
 		const formData = await event.request.formData();
-		const username = formData.get('username');
-		const password = formData.get('password');
+		const username = formData.get('username') as string;
+		const email = formData.get('email') as string | null;
+		const password = formData.get('password') as string;
 
-		if (!validateUsername(username)) {
-			return fail(400, { message: 'Invalid username' });
+		if (!username || !validateUsername(username)) {
+			return fail(400, { message: 'Invalid username (min 3, max 31 characters, alphanumeric and lowercase only)' });
 		}
-		if (!validatePassword(password)) {
-			return fail(400, { message: 'Invalid password' });
+		if ((await db.select().from(table.users).where(eq(table.users.username, username))).length > 0) {
+			return fail(400, {message: 'Username already exists'})
 		}
+		if (!email || !validateEmail(email)) {
+			return fail(400, { message: 'Invalid email' })
+		}
+		if (!password || !validatePassword(password)) {
+			return fail(400, { message: 'Invalid password (min 6, max 255 characters)' });
+		}
+		
 
 		const userId = generateUserId();
 		const passwordHash = await hash(password, {
@@ -74,7 +107,16 @@ export const actions: Actions = {
 		});
 
 		try {
-			await db.insert(table.users).values({ id: userId, username, passwordHash });
+			await db.insert(table.users).values({
+				id: userId,
+				username,
+				email,
+				passwordHash,
+				role: initialSetup ? 'admin' : 'user',
+				createdAt: new Date(Date.now()),
+				updatedAt: new Date(Date.now()),
+				lastLogin: new Date(Date.now())
+			});
 
 			const sessionToken = auth.generateSessionToken();
 			const session = await auth.createSession(sessionToken, userId);
@@ -82,7 +124,10 @@ export const actions: Actions = {
 		} catch {
 			return fail(500, { message: 'An error has occurred' });
 		}
-		return redirect(302, '/demo/lucia');
+		if(initialSetup) {
+			redirect(302, '/settings');
+		}
+		return redirect(302, '/');
 	}
 };
 
@@ -104,4 +149,8 @@ function validateUsername(username: unknown): username is string {
 
 function validatePassword(password: unknown): password is string {
 	return typeof password === 'string' && password.length >= 6 && password.length <= 255;
+}
+
+function validateEmail(email: unknown): email is string {
+	return typeof email === 'string' && /^\S+@\S+\.\S+$/.test(email);
 }
