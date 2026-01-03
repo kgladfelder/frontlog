@@ -7,8 +7,7 @@
 	let registrationEnabled = $state(data.registrationEnabled ?? false);
 </script>
 
-<div>
-	<h1>Settings here</h1>
+<div class="text-sm/6 font-semibold text-white">
 	<form method="post" use:enhance>
 		<label>
 			Allow Registration

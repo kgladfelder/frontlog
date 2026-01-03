@@ -9,7 +9,7 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="body">
+<div class="body full isolate bg-gray-900 px-6 py-24 sm:py-32 lg:px-8">
 	{@render children()}
 </div>
 <style>
