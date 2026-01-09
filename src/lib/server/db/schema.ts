@@ -36,6 +36,13 @@ export const categories = pgTable('categories', {
 	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).notNull()
 });
 
+export const userPreferences = pgTable('userPreferences', {
+	lastModifiedBy: text('last_modified_by')
+		.notNull()
+		.references(() => users.id),
+	lastModified: timestamp('last_modified', { withTimezone: true, mode: 'date' }).notNull()
+});
+
 export const userCategories = pgTable('user_categories', {
 	id: text('id').primaryKey(),
 	userId: text('userId')
