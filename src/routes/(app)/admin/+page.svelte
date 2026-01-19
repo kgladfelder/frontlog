@@ -3,15 +3,17 @@
 	import type { PageData, ActionData } from './$types';
 
 	let { data, form }: { data: PageData, form: ActionData } = $props();
-
-	let registrationEnabled = $state(data.registrationEnabled ?? false);
 </script>
+
+<svelte:head>
+	<title>FrontLog: Admin</title>
+</svelte:head>
 
 <div class="text-sm/6 font-semibold text-white">
 	<form method="post" use:enhance>
 		<label>
 			Allow Registration
-			<input type="checkbox" name="registrationEnabled" bind:checked={registrationEnabled} />
+			<input type="checkbox" name="registrationEnabled" bind:checked={data.registrationEnabled} />
 		</label>
 		<button class="rounded-md bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700">
 			Submit

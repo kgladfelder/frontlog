@@ -4,6 +4,10 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
+<svelte:head>
+	<title>FrontLog: Welcome</title>
+</svelte:head>
+
 <div class="text-sm/6 font-semibold text-white">
 	<h1>Hi, {data.user.username}!</h1>
 </div>

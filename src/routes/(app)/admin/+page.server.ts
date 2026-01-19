@@ -25,10 +25,8 @@ export const actions: Actions = {
         }
         const data = await request.formData();
         const currentSettings = (await db.select().from(table.settings)).at(0);
-        const blah = data.get('registrationEnabled');
-        const registrationEnabled = /^on$/i.test(blah as string);
-        console.log(currentSettings);
-        console.log(blah, registrationEnabled);
+        const registrationEnabled = /^on$/i.test(data.get('registrationEnabled') as string);
+        
         if (!currentSettings) {
             await db.insert(table.settings).values({
                 registrationEnabled,
@@ -45,7 +43,7 @@ export const actions: Actions = {
             const settingsResults = (await db.select().from(table.settings)).at(0);
 
             return {
-                settingsResults
+                registrationEnabled: settingsResults?.registrationEnabled
             };
         }
     }
