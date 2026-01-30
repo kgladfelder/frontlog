@@ -10,7 +10,7 @@
 	<title>FrontLog: Sign In</title>
 </svelte:head>
 
-<div class="body bg-gray-800 px-6 py-24 sm:py-32 lg:px-8">
+<div class="body bg-gray-200 dark:bg-gray-800 px-6 py-24 sm:py-32 lg:px-8">
 	{@render children()}
 </div>
 <style>
