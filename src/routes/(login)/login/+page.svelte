@@ -96,7 +96,7 @@
 							name="password"
 							class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-amber-500" />
 					</label>
-					<p style="color: red">{form?.message ?? ''}</p>
+					<p class="block font-ibm-plex text-sm/6 text-amber-400">{form?.message ?? ''}</p>
 					<div class="mt-10">
 						<button
 							class="block w-full rounded-md bg-amber-500 px-3.5 py-2.5 text-center font-ibm-plex text-lg text-white shadow-xs hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">
@@ -131,7 +131,7 @@
 						name="password"
 						class="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-amber-500" />
 				</label>
-				<p style="color: red">{form?.message ?? ''}</p>
+				<p class="block font-ibm-plex text-sm/6 text-amber-400">{form?.message ?? ''}</p>
 				<div class="mt-10">
 					<button
 						class="block w-full rounded-md bg-amber-500 px-3.5 py-2.5 text-center font-ibm-plex text-lg text-white shadow-xs hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">
