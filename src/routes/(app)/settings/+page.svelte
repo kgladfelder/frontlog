@@ -8,6 +8,6 @@
 	<title>FrontLog: Settings</title>
 </svelte:head>
 
-<div>
+<div class="text-foreground dark:text-foreground-dark">
     User settings for {data.user.username}
 </div>

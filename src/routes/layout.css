@@ -9,4 +9,18 @@
     --font-ibm-plex: "IBM Plex Sans", sans-serif;
     --font-fira-sans: "Fira Sans", sans-serif;
     --font-montserrat: "Montserrat", sans-serif;
+    --color-pitch-black: #12100E;
+    
+    --color-error: #B80C09;
+    --color-error-dark: #DD614A;
+    --color-success: #4A7C59;
+    --color-success-dark: #AFC185;
+    --color-background: #ECE2D0;
+    --color-background-dark: #252627;
+    --color-foreground: #252627;
+    --color-foreground-dark: #ECE2D0;
+    --color-shadow: #D9D3D4;
+    --color-shadow-dark: #4C4244;
+    --color-hover: #4F5D2F;
+    --color-hover-dark: #95AD5C;
 }
