@@ -6,18 +6,18 @@ export const Theme = ['light', 'dark', 'system'] as const;
 export type Theme = (typeof Theme)[number];
 
 class ThemeState {
-    #mq = new MediaQuery('(prefers-color-scheme: dark)');
-    #system = $derived<Theme>(this.#mq.current ? 'dark' : 'light');
-    #override = $state<Theme>('system');
-    #value = $derived(this.#override === 'system' ? this.#system : this.#override);
+    #mediaQuery = new MediaQuery('(prefers-color-scheme: dark)');
+    #system = $derived<Theme>(this.#mediaQuery.current ? 'dark' : 'light');
+    #selection = $state<Theme>('system');
+    #current = $derived(this.#selection === 'system' ? this.#system : this.#selection);
 
     #subscribers = 0;
-    #off?: VoidFunction;
+    #unsubscribe: VoidFunction = () => {};
 
     constructor() {
         if (BROWSER) {
             const saved: Theme = localStorage.theme ?? 'system';
-            this.#override = saved;
+            this.#selection = saved;
         }
     }
 
@@ -25,14 +25,14 @@ class ThemeState {
         if ($effect.tracking()) {
             $effect(() => {
                 if (this.#subscribers === 0) {
-                    this.#off = on(window, 'storage', (event: StorageEvent) => {
+                    this.#unsubscribe = on(window, 'storage', (event: StorageEvent) => {
                         if (event.key === 'theme') {
-                            this.#override = event.newValue as Theme;
+                            this.#selection = event.newValue as Theme;
                         }
                     });
 
                     $effect(() => {
-                        document.documentElement.classList.toggle('dark', this.#value === 'dark');
+                        document.documentElement.classList.toggle('dark', this.#current === 'dark');
                     })
                 }
 
@@ -41,8 +41,8 @@ class ThemeState {
                 return () => {
                     this.#subscribers--;
                     if (this.#subscribers === 0) {
-                        this.#off?.();
-                        this.#off = undefined;
+                        this.#unsubscribe();
+                        this.#unsubscribe = () => {};
                     }
                 }
             });
@@ -56,7 +56,7 @@ class ThemeState {
 
     get override() {
         this.subscribe();
-        return this.#override;
+        return this.#selection;
     }
 
     set override(value: Theme) {
@@ -69,12 +69,12 @@ class ThemeState {
                 localStorage.removeItem('theme');
                 break;
         }
-        this.#override = value;
+        this.#selection = value;
     }
 
     get current() {
         this.subscribe();
-        return this.#value;
+        return this.#current;
     }
 }
 
