@@ -2,7 +2,7 @@
 	import '../layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { enhance } from '$app/forms';
-	import Theme from '$lib/utilities/theme/Theme.svelte';
+	import { Footer } from '$lib/components/index.js';
 
 	let { children, data } = $props();
 
@@ -67,7 +67,7 @@
 		{@render children()}
 	</main>
 	<footer>
-		<Theme />
+		<Footer />
 	</footer>
 </div>
 

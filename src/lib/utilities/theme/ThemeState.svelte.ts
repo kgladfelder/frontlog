@@ -21,7 +21,7 @@ class ThemeState {
         }
     }
 
-    private subscribe() {
+    #subscribe() {
         if ($effect.tracking()) {
             $effect(() => {
                 if (this.#subscribers === 0) {
@@ -50,12 +50,12 @@ class ThemeState {
     }
 
     get system() {
-        this.subscribe();
+        this.#subscribe();
         return this.#system;
     }
 
     get override() {
-        this.subscribe();
+        this.#subscribe();
         return this.#selection;
     }
 
@@ -73,7 +73,7 @@ class ThemeState {
     }
 
     get current() {
-        this.subscribe();
+        this.#subscribe();
         return this.#current;
     }
 }
