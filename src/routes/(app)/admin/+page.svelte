@@ -11,6 +11,7 @@
 
 <div class="@container flex justify-center-safe">
 	<div class="w-100 rounded-md bg-shadow p-10 md:w-2/5 dark:bg-shadow-dark">
+		<h1 class="text-foreground dark:text-foreground-dark text-4xl mb-5">Admin Settings</h1>
 		<form method="post" use:enhance>
 			<div class="columns-2">
 				<div>

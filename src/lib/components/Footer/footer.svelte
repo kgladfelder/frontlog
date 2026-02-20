@@ -1,7 +1,8 @@
 <script lang="ts">
-	import Theme from "$lib/utilities/theme/Theme.svelte";
+	import ThemeChanger from "$lib/utilities/theme/ThemeChanger.svelte";
 </script>
 
 <div>
-    <Theme />
+    <!-- TODO: put full footer here, Theme changer should be to the far right -->
+    <ThemeChanger />
 </div>

@@ -66,7 +66,7 @@
 	<main class="isolate px-6 lg:px-8">
 		{@render children()}
 	</main>
-	<footer>
+	<footer class="fixed bottom-0 left-0 z-20 h-10 w-full p-0 bg-neutral-primary-soft border-t border-default shadow-sm md:flex md:items-center md:justify-between md:p-2">
 		<Footer />
 	</footer>
 </div>
