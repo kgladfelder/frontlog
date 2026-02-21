@@ -10,7 +10,7 @@ export const load: PageServerLoad = async (event) => {
     const userPreferences = (await db.select().from(table.userPreferences)).at(0);
 
     return {
-        noPrefs: true
+        userPreferences
     };
 };
 
@@ -18,33 +18,9 @@ export const actions: Actions = {
     default: async ({ locals, request }) => {
         if (!locals.user) {
             return redirect(302, '/login');
-        } else if (locals.user.role !== 'admin') {
-            return fail(401, { message: 'Unauthorized' });
         }
         const data = await request.formData();
-        const currentSettings = (await db.select().from(table.settings)).at(0);
-        const blah = data.get('registrationEnabled');
-        const registrationEnabled = /^on$/i.test(blah as string);
-        console.log(currentSettings);
-        console.log(blah, registrationEnabled);
-        if (!currentSettings) {
-            await db.insert(table.settings).values({
-                registrationEnabled,
-                lastModifiedBy: locals.user.id,
-                lastModified: new Date(Date.now())
-            });
-            return redirect(302, '/');
-        } else {
-            await db.update(table.settings).set({
-                registrationEnabled,
-                lastModifiedBy: locals.user.id,
-                lastModified: new Date(Date.now())
-            });
-            const settingsResults = (await db.select().from(table.settings)).at(0);
-
-            return {
-                settingsResults
-            };
-        }
+        
+        // TODO: Save user preferences
     }
 }

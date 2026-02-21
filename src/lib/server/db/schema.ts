@@ -1,4 +1,4 @@
-import { date, pgTable, integer, text, timestamp, boolean } from 'drizzle-orm/pg-core';
+import { date, pgTable, integer, text, timestamp, boolean, jsonb } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
 export const users = pgTable('users', {
@@ -32,7 +32,7 @@ export const settings = pgTable('settings', {
 
 export const categories = pgTable('categories', {
 	id: text('id').primaryKey(),
-	type: text('category'),
+	category: text('category'),
 	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).notNull()
 });
 
@@ -68,7 +68,8 @@ export const entries = pgTable('entries', {
 	startDate: date('start_date'),
 	endDate: date('end_date'),
 	autoComplete: boolean('auto_complete'),
-	imageId: text('image_id').references(() => images.id)
+	imageId: text('image_id').references(() => images.id),
+	metadata: jsonb('metadata')
 });
 
 export const progress = pgTable('progress', {
