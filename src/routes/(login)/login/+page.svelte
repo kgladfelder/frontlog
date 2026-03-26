@@ -116,7 +116,7 @@
 					Username
 					<input
 						name="username"
-						class="block w-full rounded-md px-3.5 py-2 text-base text-foreground dark:text-foreground-dark outline-1 -outline-offset-1 outline-foreground/10 dark:outline-foreground-dark/10 focus:outline-2 focus:-outline-offset-2 focus:outline-success dark:focus:outline-success-dark" />
+						class="block w-full rounded-md px-3.5 py-2 text-base bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark outline-1 -outline-offset-1 outline-foreground/10 dark:outline-foreground-dark/10 focus:outline-2 focus:-outline-offset-2 focus:outline-success dark:focus:outline-success-dark" />
 				</label>
 				<label class="block font-ibm-plex text-sm/6 text-foreground dark:text-foreground-dark">
 					E-Mail
